@@ -18,13 +18,13 @@ const Global = createGlobalStyle`
     width: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: gray;
+    background: #0e151c;
   }
   ::-webkit-scrollbar-thumb {
     background: #1d9bf0;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: #1d9bf0;
   }
 }
 `

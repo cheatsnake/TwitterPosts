@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import AddForm from './components/AddForm';
+import Flexbox from './components/Flexbox';
 import Post from './components/Post';
 import PostForm from './components/PostForm';
+import Settings from './components/Settings';
 
 const StyledApp = styled.div`
   width: 100%;
@@ -10,44 +13,80 @@ const StyledApp = styled.div`
   color: ${props => props.bgColor || props.theme.fontColors.dark};
 `
 const StyledContainer = styled.div`
-  max-width: 700px;
+  max-width: 666px;
   min-height: 100vh;
   margin: 0 auto;
-  border-left: 1px solid grey;
-  border-right: 1px solid gray;
-  border-bottom: 1px solid gray;
+  border-left: 1px solid #38444d;
+  border-right: 1px solid #38444d;
+  border-bottom: 1px solid #38444d;
 `
 const StyledHeader = styled.div`
-  width: 100%;
-  padding: 1rem;
   font-size: 1.5rem;
   font-weight: 600;
   background-color: ${props => props.bgColor || props.theme.colors.darkBg};
   color: ${props => props.bgColor || props.theme.fontColors.dark};
-  border-bottom: 1px solid grey;
+`
+const StyledSettings = styled.div`
+  cursor: pointer;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  transition: 0.3s all;
+  &:hover {
+    color: ${props => props.theme.colors.accent};
+    background-color: #1357af24;
+    border-radius: 50%;
+  }
+`
+const StyledEmpty = styled.div`
+  width: 100%;
+  height: 50vh;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    font-weight: 400;
+    font-size: 1.5rem;
+    opacity: 0.5;
+  }
 `
 
 function App() {
+  const [settings, setSettings] = useState(false);
+  const [addImg, setAddImg] = useState(false);
   const [index, setIndex] = useState(0);
   const [posts, setPosts] = useState([]);
+  const [postImg, setPostImg] = useState('');
+  const [user, setUser] = useState([
+  {
+    username: 'Elon Musk',
+    nickname: '@elonmusk',
+    avatar: 'https://pbs.twimg.com/profile_images/1423663740344406029/l_-QOIHY_400x400.jpg'
+  }]);
 
-  function tweet(msg, img = '') {
-    const newPost = [{postId: index, postData: msg, image: img}];
+  function tweet(msg) {
+    const newPost = [{postId: index, postData: msg, image: postImg}];
     setIndex(index + 1);
     setPosts([...newPost, ...posts]);
+    setPostImg('');
   }
 
   return (
     <StyledApp>
+      {settings ? (<Settings user={user[0]} setUser={(data) => setUser(data)} onSettings={() => setSettings(false)}/>) : null}
+      {addImg ? (<AddForm onAddImg={() => setAddImg(false)} setPostImg={(url) => setPostImg(url)}/>) : null}
       <StyledContainer>
-        <StyledHeader>Twitter Posts</StyledHeader>
-        <PostForm tweet={tweet}/>
+        <Flexbox justify="space-between" align="center" padding="1rem" borderBottom="1px solid #38444d">
+          <StyledHeader>Twitter Posts</StyledHeader>
+          <StyledSettings onClick={() => setSettings(!settings)}><i className="fas fa-cog"></i></StyledSettings>
+        </Flexbox>
+        <PostForm tweet={tweet} onAddImg={() => setAddImg(true)} avatar={user[0].avatar}/>
         {
-          posts ? (
+          posts.length ? (
             posts.map(post => {
-              return <Post key={post.postId} text={post.postData}/>
+              return <Post key={post.postId} post={post} user={user[0]} />
             })
-          ) : 'Nothing there'
+          ) : <StyledEmpty><p>It's empty here</p></StyledEmpty>
         }
       </StyledContainer>
     </StyledApp>

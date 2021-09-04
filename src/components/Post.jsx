@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 import Avatar from './Avatar';
 import Flexbox from './Flexbox';
+import VerifiedIcon from '../icons/verified.svg'
 
 const StyledAuthor = styled.div`
     color: ${props => props.bgColor || props.theme.fontColors.dark};
@@ -10,6 +11,13 @@ const StyledAuthor = styled.div`
     font-weight: 700;
 `
 const StyledNickname = styled.div`
+    margin-left: 0.4rem;
+    font-size: 1rem;
+    font-weight: 400;
+    color: rgb(136, 153, 166);
+`
+
+const StyledTime = styled.div`
     margin-left: 0.5rem;
     font-size: 1rem;
     font-weight: 400;
@@ -17,11 +25,11 @@ const StyledNickname = styled.div`
 `
 
 const StyledText = styled.div`
-    margin-top: 0.15rem;
-    color: ${props => props.bgColor || props.theme.fontColors.dark};
+    color: ${props => props.theme.fontColors.dark};
     font-size: 1rem;
     font-weight: 400;
     margin-left: 0.7rem;
+    line-height: 1.3rem;
 `
 
 const StyledPostButtons = styled(Flexbox)`
@@ -33,6 +41,12 @@ const StyledPostButtons = styled(Flexbox)`
     i {
         font-size: 1.1rem;
         margin-right: 0.7rem;
+    }
+    @media (max-width: 400px) {
+        width: 250px;
+    }
+    @media (max-width: 350px) {
+        width: 220px;
     }
 `
 
@@ -64,11 +78,39 @@ const StyledLike = styled.div`
     }
 `
 
+const StyledVerified = styled.div`
+    img {
+        margin-top: 0.2rem;
+        margin-left: 0.25rem;
+        width: 1rem;
+        height: 1rem;
+    }
+`
+
+const StyledImg = styled.div`
+    width: 97%;
+    max-height: 350px;
+    padding-left: 0.8rem;
+    margin-top: 1rem;
+    img {
+        border-radius: 1rem;
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+    }
+`
+
 const Post = (props) => {
 
     const [comments, setComments] = useState(Math.floor(Math.random() * 2800 + 200));
     const [retweets, setRetweets] = useState(Math.floor(Math.random() * 19500 + 500));
     const [likes, setLikes] = useState((Math.random() * 200 + 20).toFixed(1));
+
+    function createMarkup() {
+        return {__html: props.post.postData};
+      }
 
     function onCounter(elem) {
         if (elem === 'comments') {
@@ -83,16 +125,25 @@ const Post = (props) => {
 
     return (
 
-            <Flexbox padding="1rem" borderBottom="1px solid gray">
-                <Avatar/>
+            <Flexbox padding="1rem 1.5rem 1rem 1rem" borderBottom="1px solid #38444d">
+                <Avatar url={props.user.avatar}/>
                 <Flexbox direction="column">
                     <Flexbox>
-                        <StyledAuthor>Elon Musk</StyledAuthor>
-                        <StyledNickname>@elonmusk</StyledNickname>
+                        <StyledAuthor>{props.user.username}</StyledAuthor>
+                        <StyledVerified>
+                            <img src={VerifiedIcon} alt="verified" />
+                        </StyledVerified>
+                        <StyledNickname>{props.user.nickname}</StyledNickname>
+                        <StyledTime>1h</StyledTime>
                     </Flexbox>
-                    <StyledText>
-                        {props.text}
-                    </StyledText>
+                    <StyledText dangerouslySetInnerHTML={createMarkup()}/>
+                    {
+                        props.post.image.length ? (
+                            <StyledImg>
+                                <img src={props.post.image} alt="" />
+                            </StyledImg>
+                        ) : null
+                    }
                     <StyledPostButtons justify="space-between" margin="1rem 0 0 0.7rem">
                         <StyledComment onClick = {() => onCounter('comments')}>
                             <i className="far fa-comment"></i>

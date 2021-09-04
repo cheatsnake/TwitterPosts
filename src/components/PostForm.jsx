@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Avatar from './Avatar';
 import Button from './Button';
@@ -11,13 +11,14 @@ const StyledInput = styled.textarea`
     background-color: ${props => props.bgColor || props.theme.colors.darkBg};
     color: ${props => props.color || props.theme.fontColors.dark};
     padding: 0 1rem;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     resize: none;
     &:focus {
         outline: none;
     }
 `
-const StyledAddImage = styled.div`
+const StyledAdd = styled.div`
+    margin-top: 0.5rem;
     cursor: pointer;
     color: ${props => props.color || props.theme.colors.accent};
     font-weight: 700;
@@ -28,24 +29,39 @@ const StyledAddImage = styled.div`
     }
 `
 
-const PostForm = ({tweet}) => {
+const PostForm = ({tweet, onAddImg, avatar}) => {
 
     const [text, setText] = useState('');
+    const [rows, setRows] = useState(1);
+    const ref = createRef();
 
-    function onTweet(msg, img = '') {
-        tweet(msg)
+    function onTweet(msg) {
+        tweet(msg.split('\n').join('<br>'));
         setText('');
     }
 
-    // console.log(StyledInput.clientHeight);
+    useEffect(() => {
+        if (ref.current.scrollHeight > ref.current.clientHeight && rows < 10) {
+            setRows(rows + 1);
+        }
+        if (ref.current.innerHTML.length < 1) {
+            setRows(1);
+        }
+      }, [ref, rows]);
+
     return (
-        <Flexbox direction="column" padding="1rem" borderBottom="1px solid gray">
+        <Flexbox direction="column" padding="1rem" borderBottom="1px solid #38444d">
             <Flexbox align="flex-start">
-                <Avatar/>
-                <StyledInput onInput={(e) => setText(e.target.value)} value={text} rows="2" placeholder="What happen?"/>
+                <Avatar url={avatar}/>
+                <StyledInput 
+                    ref={ref} 
+                    onInput={(e) => setText(e.target.value)} 
+                    value={text} 
+                    rows={rows}
+                    placeholder="What happen?"/>
             </Flexbox>
             <Flexbox direction="row" justify="space-between" align="flex-start">
-                <StyledAddImage>Add image</StyledAddImage>
+                <StyledAdd onClick={onAddImg}>Add image</StyledAdd>
                 <Button onClick={() => onTweet(text)}>Tweet</Button>
             </Flexbox>
         </Flexbox>

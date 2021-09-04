@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const StyledButton = styled.button`
     cursor: pointer;
-    margin-top: 0.7rem;
+    margin-top: ${props => props.marginTop || '0.7rem'};
     background-color: ${props => props.theme.colors.accent};
     padding: 0.3rem 1.5rem 0.5rem 1.5rem;
     border: none;
