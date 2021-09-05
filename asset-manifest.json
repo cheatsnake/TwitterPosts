@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.js": "/TwitterPosts/static/js/main.8c7051ed.chunk.js",
-    "main.js.map": "/TwitterPosts/static/js/main.8c7051ed.chunk.js.map",
+    "main.js": "/TwitterPosts/static/js/main.495fd8ab.chunk.js",
+    "main.js.map": "/TwitterPosts/static/js/main.495fd8ab.chunk.js.map",
     "runtime-main.js": "/TwitterPosts/static/js/runtime-main.85318cd2.js",
     "runtime-main.js.map": "/TwitterPosts/static/js/runtime-main.85318cd2.js.map",
-    "static/js/2.3b9821dd.chunk.js": "/TwitterPosts/static/js/2.3b9821dd.chunk.js",
-    "static/js/2.3b9821dd.chunk.js.map": "/TwitterPosts/static/js/2.3b9821dd.chunk.js.map",
+    "static/js/2.280b17da.chunk.js": "/TwitterPosts/static/js/2.280b17da.chunk.js",
+    "static/js/2.280b17da.chunk.js.map": "/TwitterPosts/static/js/2.280b17da.chunk.js.map",
     "index.html": "/TwitterPosts/index.html",
-    "static/js/2.3b9821dd.chunk.js.LICENSE.txt": "/TwitterPosts/static/js/2.3b9821dd.chunk.js.LICENSE.txt",
+    "static/js/2.280b17da.chunk.js.LICENSE.txt": "/TwitterPosts/static/js/2.280b17da.chunk.js.LICENSE.txt",
     "static/media/verified.012ac5bf.svg": "/TwitterPosts/static/media/verified.012ac5bf.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.85318cd2.js",
-    "static/js/2.3b9821dd.chunk.js",
-    "static/js/main.8c7051ed.chunk.js"
+    "static/js/2.280b17da.chunk.js",
+    "static/js/main.495fd8ab.chunk.js"
   ]
 }
