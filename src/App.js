@@ -61,7 +61,7 @@ function App() {
   {
     username: 'Elon Musk',
     nickname: '@elonmusk',
-    avatar: 'https://pbs.twimg.com/profile_images/1423663740344406029/l_-QOIHY_400x400.jpg'
+    avatar: 'https://www.cnet.com/a/img/998x9FWwx5x5urvdn6ErMiodrA8=/940x0/2021/07/20/c8ab2a17-7f31-4b31-9c9f-9d665efb4787/superheavy.jpg'
   }]);
 
   function tweet(msg) {
